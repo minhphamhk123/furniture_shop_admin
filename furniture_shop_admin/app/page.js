@@ -9,6 +9,7 @@ export default function Home() {
       <h2 className="flex justify-center">
         Hello, <b>{session?.user?.name}</b>
       </h2>
+
       <div className="flex bg-gray-300 text-black gap-1 rounded-lg overflow-hidden">
         <img className="w-6 h-6" src={session?.user?.image} alt="avatar" />
         <span className="px-2">
@@ -16,5 +17,6 @@ export default function Home() {
         </span>
       </div>
     </div>
+    
   </Layout>
 }
