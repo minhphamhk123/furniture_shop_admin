@@ -5,7 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 
 const adminEmails = ['20521003@gm.uit.edu.vn'];
 
-export const authOptions = NextAuth({
+export const handler = NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_ID,
@@ -24,7 +24,7 @@ export const authOptions = NextAuth({
   },
 })
 
-export {authOptions as GET, authOptions as POST};
+export {handler as GET, handler as POST};
 
 export async function isAdminRequest(req,res) {
   const session = await getServerSession(req,res,authOptions);

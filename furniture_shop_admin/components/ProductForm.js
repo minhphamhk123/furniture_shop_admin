@@ -11,16 +11,16 @@ export default function ProductForm({
   title:existingTitle,
   description:existingDescription,
   price:existingPrice,
-  // images:existingImages,
-  // category:assignedCategory,
-  // properties:assignedProperties,
+  images:existingImages,
+  category:assignedCategory,
+  properties:assignedProperties,
 }) {
   const [title,setTitle] = useState(existingTitle || '');
   const [description,setDescription] = useState(existingDescription || '');
-  // const [category,setCategory] = useState(assignedCategory || '');
-  // const [productProperties,setProductProperties] = useState(assignedProperties || {});
+  const [category,setCategory] = useState(assignedCategory || '');
+  const [productProperties,setProductProperties] = useState(assignedProperties || {});
   const [price,setPrice] = useState(existingPrice || '');
-  // const [images,setImages] = useState(existingImages || []);
+  const [images,setImages] = useState(existingImages || []);
   const [goToProducts,setGoToProducts] = useState(false);
   const [isUploading,setIsUploading] = useState(false);
   const [categories,setCategories] = useState([]);

@@ -29,17 +29,22 @@ function Categories({ swal }) {
         values: p.values.split(","),
       })),
     };
-    if (editedCategory) {
-      data._id = editedCategory._id;
-      await axios.put("/api/categories", data);
-      setEditedCategory(null);
-    } else {
-      await axios.post("/api/categories", data);
+    try {
+      if (editedCategory) {
+        data._id = editedCategory._id;
+        await axios.put("/api/categories", data);
+        setEditedCategory(null);
+      } else {
+        await axios.post("/api/categories", data);
+      }
+      setName("");
+      setParentCategory("");
+      setProperties([]);
+      fetchCategories();
+    } catch (error) {
+      console.error("Error saving category:", error);
     }
-    setName("");
-    setParentCategory("");
-    setProperties([]);
-    fetchCategories();
+    
   }
   function editCategory(category) {
     setEditedCategory(category);

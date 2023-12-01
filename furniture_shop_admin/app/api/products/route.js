@@ -1,6 +1,6 @@
-import {Product} from "./../../models/Product";
+import {Product} from "../../../models/Product";
 import {mongooseConnect} from "mongoose";
-import {isAdminRequest} from "../api/auth/[...nextauth]/route";
+import {isAdminRequest} from "../auth/[...nextauth]/route";
 
 export default async function handle(req, res) {
   const {method} = req;
