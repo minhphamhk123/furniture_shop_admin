@@ -12,10 +12,8 @@ export async function GET(req: Request, res: Response) {
 
   try {
     const categories = await Category.find().populate('parent');
-    res.json(categories);
+    return NextResponse.json({message: "OK", categories}, {status: 200})
   } catch (error) {
-    // console.error('Error fetching categories:', error.message);
-    // res.status(500).json({ error: 'Internal Server Error' });
     return NextResponse.json({message: "Error",error}.error, {
       status: 500,
     })
