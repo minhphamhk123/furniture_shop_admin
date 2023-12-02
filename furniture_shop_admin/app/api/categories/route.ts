@@ -6,7 +6,7 @@ import { NextResponse } from 'next/server';
 
 // Hàm xử lý GET
 export async function GET(req: Request, res: Response) {
-  console.log('GET REQUEST');
+  console.log('GET CATEGORIES REQUEST');
   await mongooseConnect();
   //await isAdminRequest(req, res);
 
@@ -22,7 +22,7 @@ export async function GET(req: Request, res: Response) {
 
 // Hàm xử lý POST
 export async function POST(req: Request, res: Response) {
-  console.log('POST REQUEST');
+  console.log('POST CATEGORY REQUEST');
   const body_check = await req.json(); //1.Can co await de cho payload gia tri cho data
   console.log(body_check);
 
@@ -47,6 +47,7 @@ export async function POST(req: Request, res: Response) {
 
 // Hàm xử lý PUT
 export async function PUT(req: Request, res: Response) {
+  console.log('PUT CATEGORY REQUEST');
   const body = await req.json();
   console.log(body);
 
@@ -67,7 +68,7 @@ export async function PUT(req: Request, res: Response) {
 
 // Hàm xử lý DELETE
 export async function DELETE(req: Request, res: Response) {
-  console.log('DELETE REQUEST');
+  console.log('DELETE CATEGORY REQUEST');
   const data = await req.json();
   const { _id } = data;
   console.log(data);

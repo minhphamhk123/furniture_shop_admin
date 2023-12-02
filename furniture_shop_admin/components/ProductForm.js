@@ -28,7 +28,7 @@ export default function ProductForm({
 
   useEffect(() => {
     axios.get('/api/categories').then(result => {
-      setCategories(result.data);
+      setCategories(result.data.categories);
     })
   }, []);
 
@@ -55,6 +55,7 @@ export default function ProductForm({
   if (goToProducts) {
     router.push('/products');
   }
+
   async function uploadImages(ev) {
     const files = ev.target?.files;
     if (files?.length > 0) {
@@ -104,13 +105,13 @@ export default function ProductForm({
           onChange={ev => setTitle(ev.target.value)}/>
         <label>Category</label>
         <br/>
-        {/* <select value={category}
+        <select value={category}
                 onChange={ev => setCategory(ev.target.value)}>
           <option value="">Uncategorized</option>
           {categories.length > 0 && categories.map(c => (
             <option key={c._id} value={c._id}>{c.name}</option>
           ))}
-        </select> */}
+        </select>
         {propertiesToFill.length > 0 && propertiesToFill.map(p => (
           <div key={p.name} className="">
             <label>{p.name[0].toUpperCase()+p.name.substring(1)}</label>
@@ -131,7 +132,7 @@ export default function ProductForm({
         <label>
           Photos
         </label>
-        {/* <div className="mb-2 flex flex-wrap gap-1">
+        <div className="mb-2 flex flex-wrap gap-1">
           <ReactSortable
             list={images}
             className="flex flex-wrap gap-1"
@@ -156,7 +157,7 @@ export default function ProductForm({
             </div>
             <input type="file" onChange={uploadImages} className="hidden"/>
           </label>
-        </div> */}
+        </div>
         <label>Description</label>
         <textarea
           placeholder="description"

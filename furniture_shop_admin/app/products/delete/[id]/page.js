@@ -1,26 +1,30 @@
 'use client'
-import Layout from "@/components/Layout";
-import {useRouter} from "next/router";
+import Layout from "../../../../components/Layout";
+import {useRouter, useParams} from "next/navigation";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
 export default function DeleteProductPage() {
+  const pathName = useParams();
   const router = useRouter();
   const [productInfo,setProductInfo] = useState();
-  const {id} = router.query;
+  const {id} = pathName;
+  console.log(id)
+
   useEffect(() => {
     if (!id) {
       return;
     }
     axios.get('/api/products?id='+id).then(response => {
-      setProductInfo(response.data);
+      setProductInfo(response.data.products);
     });
   }, [id]);
+
   function goBack() {
     router.push('/products');
   }
   async function deleteProduct() {
-    await axios.delete('/api/products?id='+id);
+    await axios.delete('/api/products', { data: { id } });
     goBack();
   }
   return (
