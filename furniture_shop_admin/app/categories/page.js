@@ -52,6 +52,7 @@ function Categories({ swal }) {
       console.error("Error saving category:", error);
     }
   }
+
   function editCategory(category) {
     setEditedCategory(category);
     setName(category.name);
@@ -78,7 +79,7 @@ function Categories({ swal }) {
       .then(async (result) => {
         if (result.isConfirmed) {
           const { _id } = category;
-          await axios.delete("/api/categories?_id=" + _id);
+          await axios.delete("/api/categories", { data: { _id } });
           fetchCategories();
         }
       });
