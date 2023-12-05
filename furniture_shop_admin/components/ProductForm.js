@@ -25,7 +25,7 @@ export default function ProductForm({
   const [isUploading,setIsUploading] = useState(false);
   const [categories,setCategories] = useState([]);
   const router = useRouter();
-
+  
   useEffect(() => {
     axios.get('/api/categories').then(result => {
       setCategories(result.data.categories);
@@ -35,13 +35,16 @@ export default function ProductForm({
   async function saveProduct(ev) {
     ev.preventDefault();
     const data = {
-      title,description,price,
+      title,description,price,images,category,
+      properties:productProperties
     };
     if (_id) {
       //update
+      console.log(_id + " update id");
       await axios.put('/api/products', {...data,_id});
     } else {
       //create
+      console.log(_id + " new id");
       try {
         await axios.post('/api/products', data);
         console.log('Response:', response.data);

@@ -9,7 +9,7 @@ export default function DeleteProductPage() {
   const router = useRouter();
   const [productInfo,setProductInfo] = useState();
   const {id} = pathName;
-  console.log(id)
+  //console.log(id)
 
   useEffect(() => {
     if (!id) {

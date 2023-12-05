@@ -77,7 +77,7 @@ export default function Products() {
         ) : (
           <tbody>
             <tr>
-              <td>No categories available</td>
+              <td>No products available</td>
             </tr>
           </tbody>
         )}

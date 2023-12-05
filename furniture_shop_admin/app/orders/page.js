@@ -8,7 +8,7 @@ export default function Orders() {
   const [orders,setOrders] = useState([]);
   useEffect(() => {
     axios.get('/api/orders').then(response => {
-      setOrders(response.data);
+      setOrders(response.data.orders);
     });
   }, []);
   return (
@@ -23,7 +23,7 @@ export default function Orders() {
             <th>Products</th>
           </tr>
         </thead>
-        <tbody>
+        {orders.length > 0 ? (<tbody>
           {orders.length > 0 && orders.map(order => (
             <tr key={order._id}>
               <td>{(new Date(order.createdAt)).toLocaleString()}
@@ -46,7 +46,11 @@ export default function Orders() {
               </td>
             </tr>
           ))}
-        </tbody>
+        </tbody>)  : (
+            <tbody>
+            <tr><td>No orders available</td></tr>
+            </tbody>
+          )}
       </table>
     </Layout>
   );
