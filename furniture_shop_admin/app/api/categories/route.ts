@@ -6,16 +6,14 @@ import { NextResponse } from 'next/server';
 
 // Hàm xử lý GET
 export async function GET(req: Request, res: Response) {
-  console.log('GET REQUEST');
+  console.log('GET CATEGORIES REQUEST');
   await mongooseConnect();
   //await isAdminRequest(req, res);
 
   try {
     const categories = await Category.find().populate('parent');
-    res.json(categories);
+    return NextResponse.json({message: "OK", categories}, {status: 200})
   } catch (error) {
-    // console.error('Error fetching categories:', error.message);
-    // res.status(500).json({ error: 'Internal Server Error' });
     return NextResponse.json({message: "Error",error}.error, {
       status: 500,
     })
@@ -24,7 +22,7 @@ export async function GET(req: Request, res: Response) {
 
 // Hàm xử lý POST
 export async function POST(req: Request, res: Response) {
-  console.log('POST REQUEST');
+  console.log('POST CATEGORY REQUEST');
   const body_check = await req.json(); //1.Can co await de cho payload gia tri cho data
   console.log(body_check);
 
@@ -49,32 +47,39 @@ export async function POST(req: Request, res: Response) {
 
 // Hàm xử lý PUT
 export async function PUT(req: Request, res: Response) {
-  const body = req.body;
+  console.log('PUT CATEGORY REQUEST');
+  const body = await req.json();
   console.log(body);
 
   try {
     const { name, parentCategory, properties, _id } = body;
-    const categoryDoc = await Category.updateOne({ _id }, {
-      name,
+    const categoryDoc = await Category.updateOne({ _id: _id }, {
+      name: name,
       parent: parentCategory || undefined,
-      properties,
+      properties: properties || undefined,
     });
-    res.json(categoryDoc);
+    return NextResponse.json({message: "OK", categoryDoc}, {status: 200})
   } catch (error) {
-    console.error('Error updating category:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    return NextResponse.json({message: "Error",error}.error, {
+      status: 500,
+    })
   }
 }
 
 // Hàm xử lý DELETE
 export async function DELETE(req: Request, res: Response) {
-  const { _id } = req.query;
+  console.log('DELETE CATEGORY REQUEST');
+  const data = await req.json();
+  const { _id } = data;
+  console.log(data);
+  console.log(_id);
 
   try {
-    await Category.deleteOne({ _id });
-    res.json('ok');
+    await Category.deleteOne({ _id: _id });
+    return NextResponse.json({message: "OK", data}, {status: 200})
   } catch (error) {
-    console.error('Error deleting category:', error.message);
-    res.status(500).json({ error: 'Internal Server Error' });
+    return NextResponse.json({message: "Error",error}.error, {
+      status: 500,
+    })
   }
 }

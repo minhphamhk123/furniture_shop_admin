@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Layout from "../../components/Layout";
 import { useEffect, useState } from "react";
@@ -6,19 +6,26 @@ import axios from "axios";
 import { withSwal } from "react-sweetalert2";
 
 function Categories({ swal }) {
+  
   const [editedCategory, setEditedCategory] = useState(null);
   const [name, setName] = useState("");
   const [parentCategory, setParentCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [properties, setProperties] = useState([]);
+  
   useEffect(() => {
     fetchCategories();
   }, []);
+
   function fetchCategories() {
     axios.get("/api/categories").then((result) => {
-      setCategories(result.data);
+      setCategories(result.data.categories);
+      console.log(result.data.categories);
     });
   }
+
+  console.log("Component is rendering");
+
   async function saveCategory(ev) {
     ev.preventDefault();
     const data = {
@@ -44,8 +51,8 @@ function Categories({ swal }) {
     } catch (error) {
       console.error("Error saving category:", error);
     }
-    
   }
+
   function editCategory(category) {
     setEditedCategory(category);
     setName(category.name);
@@ -57,6 +64,7 @@ function Categories({ swal }) {
       }))
     );
   }
+
   function deleteCategory(category) {
     swal
       .fire({
@@ -71,16 +79,18 @@ function Categories({ swal }) {
       .then(async (result) => {
         if (result.isConfirmed) {
           const { _id } = category;
-          await axios.delete("/api/categories?_id=" + _id);
+          await axios.delete("/api/categories", { data: { _id } });
           fetchCategories();
         }
       });
   }
+
   function addProperty() {
     setProperties((prev) => {
       return [...prev, { name: "", values: "" }];
     });
   }
+
   function handlePropertyNameChange(index, property, newName) {
     setProperties((prev) => {
       const properties = [...prev];
@@ -88,6 +98,7 @@ function Categories({ swal }) {
       return properties;
     });
   }
+
   function handlePropertyValuesChange(index, property, newValues) {
     setProperties((prev) => {
       const properties = [...prev];
@@ -95,6 +106,7 @@ function Categories({ swal }) {
       return properties;
     });
   }
+
   function removeProperty(indexToRemove) {
     setProperties((prev) => {
       return [...prev].filter((p, pIndex) => {
@@ -102,6 +114,7 @@ function Categories({ swal }) {
       });
     });
   }
+
   return (
     <Layout>
       <h1>Categories</h1>
@@ -200,9 +213,9 @@ function Categories({ swal }) {
               <td></td>
             </tr>
           </thead>
-          <tbody>
-            {categories.length > 0 &&
-              categories.map((category) => (
+          {categories.length > 0 ? (
+            <tbody>
+              {categories.map((category) => (
                 <tr key={category._id}>
                   <td>{category.name}</td>
                   <td>{category?.parent?.name}</td>
@@ -222,7 +235,12 @@ function Categories({ swal }) {
                   </td>
                 </tr>
               ))}
-          </tbody>
+            </tbody>
+          ) : (
+            <tbody>
+            <tr><td>No categories available</td></tr>
+            </tbody>
+          )}
         </table>
       )}
     </Layout>
